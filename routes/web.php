@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
-// Route::get('/', [PostController::class, 'create']);
+Route::resource('/chat', ChatController::class);
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
