@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Repositories\ChatRepository;
+use App\Http\Requests\ChatRequest;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
+    protected $chatRepository;
+    public function __construct(ChatRepository $chatRepository)
+    {
+        $this->chatRepository = $chatRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $chat = Chat::all();
+        $chats = Chat::all();
 
-        return view('chat.index');
+        return view('chat.index', compact('chats'));
     }
 
     /**
@@ -28,9 +35,11 @@ class ChatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ChatRequest $request)
     {
-        //
+        $this->chatRepository->store($request);
+
+        return redirect()->route('chat.index');
     }
 
     /**
