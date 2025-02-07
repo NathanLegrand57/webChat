@@ -35,7 +35,7 @@
                         $side = 'start';
                     @endphp
                 @endif
-                <div class="flex justify-{{$side}}">
+                <div class="flex justify-{{ $side }}">
                     <div class="bg-white p-4 m-4 rounded-lg shadow-lg">
                         <h2 class="text-md font-bold">{{ $chat->user->name }}</h2>
                         <p>{{ $chat->message }}</p>
@@ -48,13 +48,15 @@
                     </div>
                 </div>
             @endforelse
-            <section class="relative">
-                <form action="{{ route('chat.store') }}" method="post" class="mt-10" class="absolute bottom-0 inset-x-0">
-                    @csrf
-                    <input type="text" name="message" class="p-2 border border-gray-300 rounded-lg"
-                        placeholder="Votre message">
-                    <button type="submit" class="bg-blue-500 text-white p-2 rounded-lg ml-2">Envoyer</button>
-                </form>
+            <section class="flex justify-center mt-10">
+                <section class="pb-4 bg-white rounded-lg shadow-lg mb-6 bottom-0 w-6/12">
+                    <form action="{{ route('chat.store') }}" method="post" class="mt-10" class="">
+                        @csrf
+                        <input type="text" name="message" class="ml-6 p-2 border border-gray-300 rounded-lg w-10/12"
+                            placeholder="Votre message">
+                        <button type="submit" class="bg-blue-500 text-white p-2 rounded-lg ml-2">Envoyer</button>
+                    </form>
+                </section>
             </section>
     </main>
 </body>
