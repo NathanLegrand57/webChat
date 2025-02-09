@@ -1,20 +1,34 @@
-<!DOCTYPE html>
-<html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.tailwindcss.com"></script>
 
-    {{-- <style>
-        tailwind.config= {
-            corePlugins: {
-                preflight: false,
+    @vite(['resources/js/echo.js']) {{-- Charger echo.js avant d'utiliser Echo --}}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof Echo === 'undefined') {
+                console.error('Echo is not loaded!');
+            } else {
+                Echo.channel('chat').listen('MessageSent', (e) => {
+                    let side = (e.user.id === {{ Auth::id() }}) ? 'end' : 'start';
+                    console.log(e);
+                    let chat = document.createElement('div');
+                    chat.classList.add('flex');
+                    chat.classList.add(`justify-${side}`);
+                    chat.innerHTML = `
+                        <div class="bg-white p-4 m-4 rounded-lg shadow-lg">
+                            <h2 class="text-md font-bold">${e.user.name}</h2>
+                            <p>${e.message}</p>
+                        </div>
+                    `;
+                    document.body.appendChild(chat);
+                    window.scrollTo(0, document.body.scrollHeight);
+                });
             }
-            ,
-        }
-    </style> --}}
+        });
+    </script>
     <title>Chat</title>
 </head>
 
